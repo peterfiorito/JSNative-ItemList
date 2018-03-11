@@ -1,0 +1,35 @@
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+</head>
+<div>
+	<h3>Item list!</h3>
+	<input id='counter'></input>
+</div>
+<div class="itemAdder mt-1 mb-1">
+	<input type="text" name="usrname" placeholder="Item Name" id="item-name">
+	<textarea id="description" rows="4" cols="50" name="comment" form="itemAdder" maxlength="300"></textarea>
+	<input type='file' id="fileInput" accept="image/*" />
+	<button onclick="addItem()">add item</button>
+</div>
+<!-- this is where the items will plot -->
+<ul id="columns">
+<!-- added two items as example for reference -->
+  <li class="column" draggable="true">
+  	<header>Item 1
+  		<span id="description-envelope">description</span>
+  		<button onclick="editItem(this)">edit</button>
+  		<button onclick="deleteItem()">delete</button>
+  	</header>
+  </li>
+  <li class="column" draggable="true">
+  	<header>Item 2
+  		<span id="description-envelope">description</span>
+  		<button id="editable" onclick="editItem(this)">edit</button>
+  		<button onclick="deleteItem()">delete</button>
+  	</header>
+  </li>
+</ul>
+<!-- added scripts -->
+<link rel="stylesheet" type="text/css" href="sizzleThaShit.css">
+<script type="text/javascript" src="DragnDropMagic.js"></script>
