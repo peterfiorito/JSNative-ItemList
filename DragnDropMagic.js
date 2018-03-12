@@ -270,5 +270,8 @@ $(document).ready(function()
     //restart event handlers with new structure
     var cols = document.querySelectorAll('#columns .column');
     [].forEach.call(cols, addDnDHandlers);
+    //set the counter to the actual number of items
+    var countLen = ($(".column").length);
+    counter.change(counter.element.value = countLen);
   }
 });
