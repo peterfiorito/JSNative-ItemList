@@ -7,6 +7,9 @@
   -khtml-user-drag: element;
   -webkit-user-drag: element;
 }
+ul, li{
+  list-style: none;
+}
 
 #columns {
   list-style-type: none;
