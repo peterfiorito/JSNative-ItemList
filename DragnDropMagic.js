@@ -54,6 +54,8 @@ function handleDrop(e)
     this.insertAdjacentHTML('beforebegin',dropHTML);
     var dropElem = this.previousSibling;
     addDnDHandlers(dropElem);
+    //refresh storage state
+    setStorage();
   }
   this.classList.remove('over');
   return false;
@@ -157,6 +159,11 @@ function deleteItem()
   var countLen = ($(".column").length) - 1;
   //update counter with item
   counter.change(counter.element.value = countLen);
+  //set localstore change if document is safe for manipulation
+  $(document).ready(function()
+  {
+    setStorage();
+  });
 }
 
 function editItem(element)
@@ -232,7 +239,8 @@ function imageReplace(element)
         }
         finally
         {
-          replaceThis.src = frep.result;
+          //store update
+          setStorage();
         }
       }
     } 
