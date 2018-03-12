@@ -6,12 +6,12 @@
 </head>
 <div>
 	<h3>Item list!</h3>
-	<input id='counter'></input>
+	<span>item count so far:&nbsp;<input id='counter'></input></span>
 </div>
 <div class="itemAdder mt-1 mb-1">
-	<input type="text" name="usrname" placeholder="Item Name" id="item-name">
-	<textarea id="description" rows="4" cols="50" name="comment" form="itemAdder" maxlength="300"></textarea>
-	<input type='file' id="fileInput" accept="image/*" />
+	<input type="text" name="usrname" placeholder="Item Name" id="item-name" class="ml-1">
+	<textarea id="description" rows="4" cols="50" name="comment" form="itemAdder" maxlength="300" class="ml-1"></textarea>
+	<input type='file' id="fileInput" accept="image/*" class="ml-1" />
 	<button onclick="addItem()">add item</button>
 </div>
 <!-- this is where the items will plot -->
