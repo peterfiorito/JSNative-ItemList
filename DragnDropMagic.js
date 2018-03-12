@@ -108,6 +108,7 @@ function addItem(){
   $container.append($item)
   //insert the image based on the dynId
   fr.onload = inserter;
+  fr.onloadend = setStorage;
   var insertId = "#"+dynId;
   function inserter(){
     $(insertId).attr('src', fr.result);
@@ -122,10 +123,14 @@ function addItem(){
   nameTarget.val("");
   descriptionTarget.val("");
   input.value = "";
-  //get current list state
-  var list = document.getElementById("columns");
-  var sessionList = mapDOM(list,true);
-  localStorage['session'] = sessionList;
+}
+//function called on additem, set storage state
+function setStorage(){
+//get current list state
+  var sendThis = document.getElementById("columns").innerHTML;
+  var jsonS = html2json(sendThis);
+  var storeSession = JSON.stringify(jsonS);
+  localStorage['session'] = storeSession;
 }
 
 //deleting items to the list
@@ -233,59 +238,16 @@ MyCounter.prototype.change = function (value) {
 var countLen = $(".column").length;
 var counter = new MyCounter(document.getElementById("counter"), countLen);
 
-//the final insult, a JSON parser to store the session
-function mapDOM(element, json) {
-    var treeObject = {};
-
-    // If string convert to document Node
-    if (typeof element === "string") {
-        if (window.DOMParser) {
-              parser = new DOMParser();
-              docNode = parser.parseFromString(element,"text/xml");
-        } else { // Microsoft strikes again
-              docNode = new ActiveXObject("Microsoft.XMLDOM");
-              docNode.async = false;
-              docNode.loadXML(element); 
-        } 
-        element = docNode.firstChild;
-    }
-
-    //Recursively loop through DOM elements and assign properties to object
-    function treeHTML(element, object) {
-        object["type"] = element.nodeName;
-        var nodeList = element.childNodes;
-        if (nodeList != null) {
-            if (nodeList.length) {
-                object["content"] = [];
-                for (var i = 0; i < nodeList.length; i++) {
-                    if (nodeList[i].nodeType == 3) {
-                        object["content"].push(nodeList[i].nodeValue);
-                    } else {
-                        object["content"].push({});
-                        treeHTML(nodeList[i], object["content"][object["content"].length -1]);
-                    }
-                }
-            }
-        }
-        if (element.attributes != null) {
-            if (element.attributes.length) {
-                object["attributes"] = {};
-                for (var i = 0; i < element.attributes.length; i++) {
-                    object["attributes"][element.attributes[i].nodeName] = element.attributes[i].nodeValue;
-                }
-            }
-        }
-    }
-    treeHTML(element, treeObject);
-
-    return (json) ? JSON.stringify(treeObject) : treeObject;
-}
 //at the start of the session, check if there is data stored in cache
 $(document).ready(function()
 { 
   if(localStorage['session'])
   {
-    var restoreData = JSON.parse(localStorage['session']);
-    var resCont = document.getElementById("columns");
+    var jsonS = localStorage['session'];
+    var restoredData = JSON.parse(jsonS);
+    var plotHtml = json2html(restoredData);
+    //and set it to the stored data
+    var columns = $('#columns');
+    var container = columns.html(plotHtml);  
   }
 });
